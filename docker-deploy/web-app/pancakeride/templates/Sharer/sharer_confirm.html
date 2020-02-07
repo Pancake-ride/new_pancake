@@ -1,0 +1,33 @@
+{% block content %}
+  <h1>Ride Information</h1>
+  {% if ride_detail %}
+  <ul>
+       <li><a>Ride Owner: {{ride_detail.owner}}</a></li>
+       <li><a>Ride Status: {{ride_detail.status}}</a></li>
+       <li><a>Destination: {{ride_detail.destination}}</a></li>
+       <li><a>Arrival Time: {{ride_detail.arrival_time}}</a></li>
+       <li><a>Special Vehicle Info:{{ride_detail.special_vehicle_info}}</a></li>
+       <li><a>Owner Party Size:{{ride_detail.passenger_num}}</a></li>
+       
+       {% if ride_detail.sharer %}
+       <li><a>Sharer ID:{{ride_detail.sharer}}</a></li>
+       <li><a>Sharer Party Size:{{ride_detail.sharer_num}}</a></li>
+       {% endif %}
+
+       {% if ride_detail.driver %}
+       <li><a>Driver ID:{{ride_detail.driver}}</a></li>
+       <li><a>Vehicle Type:{{ride_detail.vehicle_type}}</a></li>
+       {% endif %}
+  </ul>
+  {% else %}
+    <p>There is no required order.</p>
+  {% endif %}
+  
+  
+{% endblock %}
+
+<form  method="post">
+    {% csrf_token %} 
+    Sharers Number: <input type="text" name="sharer_num"/>
+    <input type="submit" value="Join"/>
+</form>

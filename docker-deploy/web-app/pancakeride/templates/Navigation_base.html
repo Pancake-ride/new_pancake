@@ -1,0 +1,120 @@
+{%  load static %}
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/default.css'%}">
+
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!-- <style >
+body{
+	/* background-image: url("{%static 'pic/background_pic.jpg'%}") */
+	<body background-color="#B6DBF2"></body>
+}
+</style> -->
+<body style="background-color:white">
+</body>
+
+<!--必要样式-->
+<link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet">
+<link href="{% static 'css/app.css'%} " rel="stylesheet" type="text/css">
+<!-- <div class="header">
+	<h1>网页头部</h1>
+</div> -->
+</head>
+<body>
+
+<div id="contentWrapper">
+
+
+	<div id="contentLeft">
+		<div  align = "center">
+			<img src="{% static 'pic/logo_light.png'%}">
+		  </div>
+		<ul id="leftNavigation">
+
+			<li class="active">
+				<p> <a href="#"><i class="fa fa-user leftNavIcon"></i>
+					{% if user.is_authenticated %}
+					Hi {{ user.username }}!
+					{%else%}
+					Welcome
+					{% endif %}
+				</a>
+				</p>
+				<ul>
+					<!-- <li>
+						<a href="#"><i class="fa fa-angle-right leftNavIcon"></i> Our History</a>
+					</li>
+					<li>
+						<a href="#"><i class="fa fa-angle-right leftNavIcon"></i> Our Team</a>
+					</li> -->
+				</ul>
+			</li>
+			<li>
+				<p><a href="{% url 'pancakeride:ride_list'%}?s=op"><i class="fa fa-calendar leftNavIcon "></i>Status</a></p>
+				<!-- <ul>
+					<li>
+						<a href="#"><i class="fa fa-angle-right leftNavIcon"></i> Garden</a>
+					</li>
+					<li>
+						<a href="#"><i class="fa fa-angle-right leftNavIcon"></i> Office</a>
+					</li>
+					<li>
+						<a href="#"><i class="fa fa-angle-right leftNavIcon"></i> Home</a>
+					</li>
+				</ul> -->
+			</li>
+			<li>
+				<p><a href="{% url 'pancakeride:driver_register'%}"><i class="fa fa-car leftNavIcon"></i>Driver register / Edit</a></p>
+			</li>
+			<li>
+				<p><a href="/pancake/home/"><i class="fa fa-home leftNavIcon"></i>Home</a></p>
+			</li>
+			<li>
+				<p><a href="{% url 'login' %}"><i class="fa fa-truck leftNavIcon"></i> Log out</a></p>
+				<!-- <ul>
+					<li>
+						<a href="#"><i class="fa fa-angle-right leftNavIcon"></i> Garden</a>
+					</li>
+					<li>
+						<a href="#"><i class="fa fa-angle-right leftNavIcon"></i> Office</a>
+					</li>
+					<li>
+						<a href="#"><i class="fa fa-angle-right leftNavIcon"></i> Home</a>
+					</li>
+				</ul> -->
+			</li>
+			<!-- <li class="clickable">
+				<a href="{% url 'login' %}"><i class="fa fa-envelope-o leftNavIcon"></i>Log out</a>
+			</li> -->
+
+		</ul>
+
+	</div>
+
+	<div id="contentRight">
+
+	   <header class="htmleaf-header">
+		
+		</header>
+		{% block content%}
+		{% endblock %}
+	</div>
+
+</div>
+
+<script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.ssd-vertical-navigation.min.js'%}"></script>
+<script type="text/javascript">
+$(function() {
+
+    $('#leftNavigation').ssdVerticalNavigation();
+
+});
+</script>
+</body>
+</html>

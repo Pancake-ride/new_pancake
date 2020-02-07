@@ -1,0 +1,39 @@
+
+{% extends 'Navigation_base.html' %}
+{% load static %}
+
+
+
+
+{% block content %}
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<body>
+<title>Ride Request</title>
+<div class="container">
+  <!-- <div align="center"> -->
+    
+<h1>DRIDE REQUEST</h1>
+<hr>
+  <!-- <h2>Ride Request</h2> -->
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+<!-- </div> -->
+</div>
+ <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+{% endblock %}

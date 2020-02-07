@@ -1,0 +1,171 @@
+
+{% extends 'Navigation_base.html' %}
+{% load static %}
+
+{% block content %}
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<body>
+<title>Status</title>
+<style>
+.list-group-horizontal .list-group-item {
+    display: inline-block;
+}
+.list-group-horizontal .list-group-item {
+    margin-bottom: 0;
+    margin-left:-4px;
+    margin-right: 0;
+}
+.list-group-horizontal .list-group-item:first-child {
+    border-top-right-radius:0;
+    border-bottom-left-radius:4px;
+}
+.list-group-horizontal .list-group-item:last-child {
+    border-top-right-radius:4px;
+    border-bottom-left-radius:0;
+}
+</style>
+<br>
+<br>
+
+<h1>What kind of rides do you want to see?</h1>
+<br>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+    <a href="{% url 'pancakeride:ride_list'%}?s=op" >
+    <button type="button" class="btn btn-primary">Open Rides</button>
+    </a>
+  </div>
+  <div class="btn-group mr-2" role="group" aria-label="Second group">
+    <a href="{% url 'pancakeride:ride_list'%}?s=cf" >
+      <button type="button" class="btn btn-primary">Confirmed Rides</button>
+      </a>
+
+  </div>
+  <div class="btn-group" role="group" aria-label="Third group">
+    <a href="{% url 'pancakeride:ride_list'%}?s=cp" >
+      <button type="button" class="btn btn-primary">Completed  Rides</button>
+      </a>
+  </div>
+</div>
+<br>
+<br>
+<h1>Results:</h1>
+<br>
+  <h3>Ride List</h3>
+  {% if owner_ride_list %}
+  <ul class = "list-group ">
+    {% if status == 'op' %}
+      {% for request in owner_ride_list %}
+      
+          <ul class="list-group list-group-horizontal">
+            <li class="list-group-item"> Arrival time: {{ request.arrival_time }} </li>
+            <li class="list-group-item"> Destination: {{request.destination}}</li>
+            {% if request.driver%}
+                  <li class="list-group-item">
+                    Driver: {{request.driver}}
+                  </li>
+                  {% else%}
+                  <li class="list-group-item" style="color: red">
+                    Driver: Empty
+                  </li>
+              {% endif %}
+              <a style="color:white" class="list-group-item list-group-item-action active" href = "{{ request.get_ride_edit_url }}">View / Edit</a>
+          </ul>
+          <!-- <a style="color:#888" href = "{{ request.get_ride_edit_url }}">
+            Arrival time: {{ request.arrival_time }} Destination: {{request.destination}}</a>
+            {% if request.driver%}(Driver: {{request.driver}}){% endif %}(status: {{request.status}}) -->
+      
+      {% endfor %}
+    
+    {% else %}
+      {% for request in owner_ride_list %}
+      
+      <ul class="list-group list-group-horizontal">
+        <li class="list-group-item"> Arrival time: {{ request.arrival_time }} </li>
+        <li class="list-group-item"> Destination: {{request.destination}}</li>
+        {% if request.driver%}
+              <li class="list-group-item">
+                Driver: {{request.driver}}
+              </li>
+              {% else%}
+              <li class="list-group-item" style="color: red">
+                Driver: Empty
+              </li>
+          {% endif %}
+          <a style="color:white" class="list-group-item list-group-item-action active" href = "{{ request.get_ride_detail_url }}">View</a>
+      </ul>
+
+        <!-- <li class="list-group-item">
+          <a style="color:#888" href = "{{ request.get_ride_detail_url }}">Arrival time: {{ request.arrival_time }} Destination: {{request.destination}}</a>{% if request.driver%}(Driver: {{request.driver}}){% endif %}(status: {{request.status}})
+        </li> -->
+      {% endfor %}  
+    {% endif %}
+  </ul>
+  {% else %}
+    <p>You do not have required rides currently.</p>
+  {% endif %}       
+</ul>
+  <h3>Share List</h3>
+  {% if sharer_ride_list %}
+  
+    {% for request in sharer_ride_list %}
+      
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item"> Arrival time: {{ request.arrival_time }} </li>
+          <li class="list-group-item"> Destination: {{request.destination}}</li>
+          {% if request.driver%}
+                <li class="list-group-item">
+                  Driver: {{request.driver}}
+                </li>
+                {% else%}
+                <li class="list-group-item" style="color: red">
+                  Driver: Empty
+                </li>
+            {% endif %}
+            <a style="color:white" class="list-group-item list-group-item-action active" href = "{{ request.get_ride_detail_url }}">View</a>
+        </ul>
+        <!-- <a style="color:#888" href = "{{ request.get_ride_detail_url }}">Arrival time: {{ request.arrival_time }} Destination: {{request.destination}}</a>{% if request.driver%}(Driver: {{request.driver}}){% endif %}(status: {{request.status}}) -->
+      
+    {% endfor %}
+  
+  {% else %}
+    <p>You do not have required rides currently.</p>
+  {% endif %} 
+
+  <h3>Drive List</h3>
+  {% if driver_ride_list %}
+    
+      {% for request in driver_ride_list %}
+      <ul class="list-group list-group-horizontal">
+        <li class="list-group-item"> Arrival time: {{ request.arrival_time }} </li>
+        <li class="list-group-item"> Destination: {{request.destination}}</li>
+        {% if request.driver%}
+              <li class="list-group-item">
+                Driver: {{request.driver}}
+              </li>
+              {% else%}
+              <li class="list-group-item" style="color: red">
+                Driver: Empty
+              </li>
+          {% endif %}
+          <a style="color:white" class="list-group-item list-group-item-action active" href = "{{ request.get_ride_detail_url }}">View</a>
+      
+          <!-- <a style="color:#888" href = "{{ request.get_ride_detail_url }}">Arrival time: {{ request.arrival_time }} Destination: {{request.destination}}</a>{% if request.driver%}(Driver: {{request.driver}}){% endif %}(status: {{request.status}})
+         -->
+        {% if status == 'cf' %}
+        <a style="color:white" class="list-group-item list-group-item-action active" href = "{{ request.get_driver_complete_url }}">Complete</a>
+
+        {% endif %}
+      {% endfor %}
+    
+      </ul>
+  {% else %}
+    <p>You do not have required rides currently.</p>
+  {% endif %} 
+
+
+  <p><a href="{% url 'pancakeride:main_home'%}">Return to Home</a></p>
+<!-- {% if status != 'cp' %}
+status
+{% endif %} -->
+{% endblock %}

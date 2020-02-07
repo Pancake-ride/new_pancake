@@ -1,0 +1,79 @@
+
+{% extends 'Navigation_base.html' %}
+{% load static %}
+{% block content%}
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  .list-group-horizontal .list-group-item {
+      display: inline-block;
+  }
+  .list-group-horizontal .list-group-item {
+      margin-bottom: 0;
+      margin-left:-4px;
+      margin-right: 0;
+  }
+  .list-group-horizontal .list-group-item:first-child {
+      border-top-right-radius:0;
+      border-bottom-left-radius:4px;
+  }
+  .list-group-horizontal .list-group-item:last-child {
+      border-top-right-radius:4px;
+      border-bottom-left-radius:0;
+  }
+  </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <h1>Sharer Search Order</h1>
+</head>
+<body>
+<form action="/pancake/sharer/search/" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <input type="submit" class = "btn btn-primary"value="搜索"/>
+</form>
+<br>
+<h1>Result:</h1>
+<br>
+{% if availabel_rides %}
+
+  {% for request in availabel_rides %}
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item"> Arrival time: {{ request.arrival_time }} </li>
+    <li class="list-group-item"> Destination: {{request.destination}}</li>
+    {% if request.driver%}
+          <li class="list-group-item">
+            Driver: {{request.driver}}
+          </li>
+          {% else%}
+          <li class="list-group-item" style="color: red">
+            Driver: Empty
+          </li>
+      {% endif %}
+    
+      <a style="color:white" class="btn btn-primary" href = "{{ request.get_driver_confirm_url }}">Join!</a>
+  </ul>
+  {% endfor %}
+
+{% else %}
+  <p>No availabel ride according to your search.</p>
+{% endif %}
+
+</body>
+<a href="javascript:history.go(-1);">Return</a>
+</html>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+
+{% extends 'Navigation_base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <!-- <head>
+    <meta charset="UTF-8">
+    <title>Django Form</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+   </head> -->
+   <title>Driver Register</title>
+   <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+   <body>
+  <div class="container">
+   <div>
+     
+    <h1>Drive registration / Edit your information</h1>
+    <hr>
+
+   <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <p>
+      {{ field.label_tag }}<br>
+      {{ field }}
+      {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+      {% endif %}
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+    </p>
+  {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+ 
+   </div>
+   </div>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <br>
+  <br>
+    <p><a href="{% url 'pancakeride:main_home'%}">Return to Home</a></p>
+
+{% endblock %}

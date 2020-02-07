@@ -1,0 +1,37 @@
+{% extends 'Navigation_base.html' %}
+{% load static %}
+{% block content %}
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!--<style type="text/css">
+
+	.imgw{position: relative;}
+  
+</style>
+<body>
+
+	<div class="imgw">
+		<img src="{% static 'pic/bg_home.JPG'%}" alt= "" width="100%">
+		<div class="button">飞流太萌了</div>
+  </div> -->
+  
+  {% if user.is_authenticated %}
+  <div style="position:relative;">
+    <img src="{% static 'pic/bg_home.JPG'%}" />
+    
+    <a href="{% url 'pancakeride:ride_request'%}"><input type="button" class = "btn btn-primary btn-lg"value="Create a new ride!" style="position:absolute; left:360px; top:350px;" /></a>
+
+    <a href="{% url 'pancakeride:sharer_search'%}"><input type="button" class = "btn btn-primary btn-lg"value="Search sharable ride!" style="position:absolute; left:350px; top:420px;" /></a>
+
+    <a href="{% url 'pancakeride:driver_search'%}"><input type="button" class = "btn btn-primary btn-lg"value="Drive search order!" style="position:absolute; left:360px; top:490px;" /></a>
+
+</div>
+<!-- <div id="Layer1" style="position:absolute; width:86%; height:500%; z-index:-1">  
+  <img src="{% static 'pic/bg_home.JPG'%}" height="100%" width="100%"/>  
+</div>   -->
+
+{% else %}
+
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+{% endblock %}

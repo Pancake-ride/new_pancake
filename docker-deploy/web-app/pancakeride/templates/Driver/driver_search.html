@@ -1,0 +1,68 @@
+
+{% extends 'Navigation_base.html' %}
+{% load static %}
+{% block content%}
+<style>
+  .list-group-horizontal .list-group-item {
+      display: inline-block;
+  }
+  .list-group-horizontal .list-group-item {
+      margin-bottom: 0;
+      margin-left:-4px;
+      margin-right: 0;
+  }
+  .list-group-horizontal .list-group-item:first-child {
+      border-top-right-radius:0;
+      border-bottom-left-radius:4px;
+  }
+  .list-group-horizontal .list-group-item:last-child {
+      border-top-right-radius:4px;
+      border-bottom-left-radius:0;
+  }
+  </style>
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<h1>Driver Search List</h1>
+<br>
+{% if availabel_rides %}
+<ul class="list-group">
+
+  {% for request in availabel_rides %}
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item"> Arrival time: {{ request.arrival_time }} </li>
+    <li class="list-group-item"> Destination: {{request.destination}}</li>
+    {% if request.driver%}
+          <li class="list-group-item">
+            Driver: {{request.driver}}
+          </li>
+          {% else%}
+          <li class="list-group-item" style="color: red">
+            Driver: Empty
+          </li>
+      {% endif %}
+    
+      <a style="color:white" class="btn btn-primary" href = "{{ request.get_driver_confirm_url }}">Take this order!</a>
+  </ul>
+
+    <!-- <li>
+      <a style="color:#888" href = "{{ request.get_driver_confirm_url }}">Arrival time: {{ request.arrival_time }} Destination: {{request.destination}}</a>{% if request.driver%}(Driver: {{request.driver}}){% endif %}(status: {{request.status}})
+    </li> -->
+  {% endfor %}
+</ul>
+{% else %}
+  <p>No availabel ride according to your search.</p>
+{% endif %}
+</body>
+</html>
+<a href="javascript:history.go(-1);">Return</a>
+<br>
+<!-- <p><a href="{% url 'pancakeride:main_home'%}">home</a></p> -->
+{% endblock%}

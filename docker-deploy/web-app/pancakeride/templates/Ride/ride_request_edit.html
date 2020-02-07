@@ -1,0 +1,30 @@
+
+
+{% extends 'Navigation_base.html' %}
+{% load static %}
+
+
+{% block content %}
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<body>
+<title>Ride Edit</title>
+<div class="container">
+  <h2>Edit your ride</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Edit</button>
+  </form>
+</div>
+{% endblock %}

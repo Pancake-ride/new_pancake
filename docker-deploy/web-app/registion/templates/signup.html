@@ -1,0 +1,38 @@
+
+<!-- {% block title %}Sign Up{% endblock %} -->
+{% load static %}
+{% block content %}
+  
+  <style type="text/css">
+    p {margin-left: 600px;}
+    
+  </style> 
+  <body style="background-color:#E6E6E6"></body>
+  <div id="logo" align="center" >
+    <img src="{% static 'pic/logo.png'%}" alt=""/>
+   </div>
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+<div class = "container" > 
+  <form method="post">
+    <h1>Sign up</h1> 
+    
+    {% csrf_token %}
+    {% for field in form %}
+   
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Sign up</button>
+  </form>
+  
+</div >
+{% endblock %}

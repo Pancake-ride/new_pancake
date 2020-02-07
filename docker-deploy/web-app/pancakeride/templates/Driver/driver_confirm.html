@@ -1,0 +1,45 @@
+{% extends 'Navigation_base.html' %}
+{% load static %}
+
+{% block content %}
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<br>
+<h1 class="card-header">Comfirm your ride</h1>
+<br>
+<div class="card border-dark mb-3" style="width: 50rem;" >
+  
+  
+  {% if ride_detail %}
+  
+  <ul class="list-group list-group-flush">
+       <li class="list-group-item"><a>Ride Owner: {{ride_detail.owner}}</a></li>
+       <li class="list-group-item"><a>Ride Status: {{ride_detail.status}}</a></li>
+       <li class="list-group-item"><a>Destination: {{ride_detail.destination}}</a></li>
+       <li class="list-group-item"><a>Arrival Time: {{ride_detail.arrival_time}}</a></li>
+       <li class="list-group-item"><a>Special Vehicle Info:{{ride_detail.special_vehicle_info}}</a></li>
+       <li class="list-group-item"><a>Owner Party Size:{{ride_detail.passenger_num}}</a></li>
+       
+       {% if ride_detail.sharer %}
+       <li class="list-group-item"><a>Sharer ID:{{ride_detail.sharer}}</a></li>
+       <li class="list-group-item"><a>Sharer Party Size:{{ride_detail.sharer_num}}</a></li>
+       {% endif %}
+
+       {% if ride_detail.driver %}
+       <li class="list-group-item"><a>Driver ID:{{ride_detail.driver}}</a></li>
+       <li class="list-group-item"><a>Vehicle Type:{{ride_detail.vehicle_type}}</a></li>
+       {% endif %}
+  </ul>
+  {% else %}
+    <p>There is no required order.</p>
+  {% endif %}
+
+
+
+<form  method="post">
+    {% csrf_token %} 
+    <input type="submit" class ="btn btn-primary" value="Confirm"/>
+</form>
+<br>
+<a href="javascript:history.go(-1);">Return</a>
+</div>
+{% endblock %}
